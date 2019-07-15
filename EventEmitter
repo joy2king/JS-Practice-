@@ -1,0 +1,54 @@
+class EventEmitter{
+   constructor(){
+    this.listeners = new Map();
+   }
+   
+   subscrible(eventName,callback {
+     if(typeof eventName !== 'string' || typeof callback !== 'function'){
+       return new Error('Incorrect input type');
+     }
+     const listenser = this.listeners.get(eventNme) || [];
+     listenser.push(callback);
+     this.listeners.set(eventName,listenser);
+     
+     const release = () => {
+        const index = listenser.indexOf(callback);
+        if(index !== -1){
+          listenser.splice(index,1);
+          if(!listenser.length){
+            this.listeners.delete(eventName);
+          }
+        }
+      }
+      
+     return {release:release}
+   }
+   
+   eimt(eventName,...args){
+     if(typeof eventName !== 'string'){
+       return new Error('Incorrect input type');
+     }
+     const lisenser = this.listeners.get(eventName);
+     for(let ls of lisenser){
+        ls.apply(undefined ,args)
+     }
+   } 
+}
+
+Use Cases:
+const myEmitter = new EventEmitter();
+
+function c1() {
+   console.log('an event occurred!');
+}
+function c2() {
+   console.log('yet another event occurred!');
+}
+const subOne = myEmitter.subscrible('eventOne', c1); // Register for eventOne
+const subTwo = myEmitter.subscrible('eventOne', c2); // Register for eventOne
+subTwo.release()
+const subTwo myEmitter.subscrible('eventTwo', c2); // Register for eventOne
+
+
+myEmitter.emit('eventOne');// Emit event
+
