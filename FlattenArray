@@ -1,0 +1,5 @@
+function flattenDeep(arry) {
+   return arry.reduce(
+       (acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val)
+       , []);
+}
